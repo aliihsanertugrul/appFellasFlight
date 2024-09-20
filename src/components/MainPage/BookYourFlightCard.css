@@ -1,0 +1,55 @@
+.book-your-flight-buttons .btn.round-trip {
+  color: white;
+  background: purple;
+  border-radius: 20px 0 0 20px;
+}
+
+.book-your-flight-buttons .btn.one-way {
+  color: white;
+  background: gray;
+  border-radius: 0 20px 20px 0;
+}
+.card-text{
+    display:flex;
+    margin-top:20px;
+  
+}
+.form-control:focus {
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  border-color: grey !important;
+  outline: 0;
+  border-radius:20px;
+  box-shadow: none !important;
+}
+.input-group-container {
+  display: flex;
+  align-items: center;
+  margin:10px;
+}
+
+.departure,.calendar-left {
+  border: 1px solid gray;
+  border-radius: 20px 0 0 20px;
+  margin-right:5px;
+}
+.departure span,
+.departure input,.calendar-left span,.calendar-left input {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+.arrival,.calendar-right {
+    border: 1px solid gray;
+    border-radius: 0 20px 20px 0;
+  }
+  .arrival span,
+  .arrival input ,.calendar-right span,.calendar-right input{
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+.input-group-text svg{
+    color:purple;
+}

@@ -1,0 +1,45 @@
+.flight-card{
+    border-radius:10px 10px 10px 0 !important;
+    margin-bottom:60px;
+}
+hr {
+    flex: 1; /* Çizginin bulunduğu alanı kaplamasını sağlar */
+    border: 1px solid black !important; /* Çizginin kalınlığı ve rengini ayarlar */
+    margin: 0 1rem !important;
+  }
+.price-container{
+    padding:20px;
+}
+.price-container p{
+    margin-bottom:0;
+}
+.footer{
+    position:relative;
+}
+.book-flight-btn{
+    position:absolute;
+    bottom:0;
+    right:0;
+    border-radius:6px 0 6px 0 ;
+    padding:10px 20px ;
+    background-color:purple ;
+    color:white ;
+    font-weight:600 ;
+    outline:none;
+    border:none;
+    
+}
+
+.check-details{
+    position:absolute;
+    left:0;
+    bottom:-44px;
+    padding: 10px 20px;
+    background:#ded9f6;
+    color:purple;
+    border-radius:0 0 6px 6px;
+}
+.check-details a{
+    color:purple;
+    font-size:14px;
+}
