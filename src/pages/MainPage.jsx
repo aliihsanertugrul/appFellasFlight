@@ -3,6 +3,7 @@ import CardRentals from "../components/MainPage/CardRentals";
 
 import BookYourFlightCard from "../components/MainPage/BookYourFlightCard";
 import Flights from "../components/MainPage/Flights";
+import SortSection from "../components/MainPage/SortSection";
 
 const MainPage = () => {
   return (
@@ -20,7 +21,7 @@ const MainPage = () => {
               
             </div>
             <div className="col-4">
-              <div className="card">sorting</div>
+              <SortSection />
             </div>
           </div>
         </div>

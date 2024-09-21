@@ -1,0 +1,34 @@
+.sort-section-container {
+  padding: 5px;
+}
+.sort-section-container div .dropdown-toggle {
+  background-color: white;
+  border-radius: 6px;
+  width: 100%;
+  font-weight: 400;
+  opacity:0.8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sort-section-container .section-item {
+  margin-bottom: 20px;
+}
+.sort-section-container div p{
+    margin: 5px;
+    font-weight:600
+  }
+  .form-check-input:checked {
+    background-color: purple;
+    border-color: purple;
+}
+.form-check-input:focus {
+    border-color: purple; 
+ outline: 0;
+    
+}
+.form-check-input {
+    
+    background-image: none;
+   
+}
