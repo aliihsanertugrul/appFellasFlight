@@ -1,42 +1,75 @@
 import React, { useEffect, useState } from "react";
 import { TbPlaneDeparture, TbPlaneArrival } from "react-icons/tb";
 import { IoAirplane } from "react-icons/io5";
-
 import "./FlightItem.css";
+import axios from "axios";
 
 const FlightItem = ({ flight }) => {
-  const { estimatedLandingTime, scheduleDateTime, route, prefixIATA, flightName, flightDirection } = flight;
+  const {
+    estimatedLandingTime,
+    scheduleDateTime,
+    route,
+    prefixICAO,
+    flightDirection,
+    id,
+    flightNumber,
+  } = flight;
   const [flightDuration, setFlightDuration] = useState("");
+  const [destinationData, setDestinationData] = useState("");
+  const [airlineData, setAirlineData] = useState("");
+  const [loading, setLoading] = useState(true); // Yüklenme durumu için state
   const destination = route.destinations[route.destinations.length - 1];
-console.log(estimatedLandingTime);
+
+  useEffect(() => {
+    // Uçuş bilgileriyle ilgili API'ye istek yap
+    const fetchDestinationData = async () => {
+      try {
+        const responseDestination = await axios.get(
+          `http://localhost:3001/api/public-flights/destinations/${prefixICAO}`
+        );
+        const responseAirline = await axios.get(
+          `http://localhost:3001/api/public-flights/airlines/${prefixICAO}`
+        );
+        setDestinationData(responseDestination?.data?.publicName?.english);
+        setAirlineData(responseAirline?.data?.publicName);
+        setLoading(false); // Veriler alındığında yüklenme durumu kapatılır
+      } catch (error) {
+        console.error("Hata:", error);
+        setLoading(false); // Hata durumunda da yüklenme durumu kapatılır
+      }
+    };
+
+    fetchDestinationData();
+  }, [prefixICAO]); // `prefixICAO` değiştiğinde yeniden isteği yap
+
   useEffect(() => {
     if (scheduleDateTime && estimatedLandingTime) {
-      // Uçuş süresini hesaplama fonksiyonu
-      const calculateFlightDuration = (scheduleDateTime, estimatedLandingTime) => {
+      const calculateFlightDuration = (
+        scheduleDateTime,
+        estimatedLandingTime
+      ) => {
         const departureTime = new Date(scheduleDateTime);
         const landingTime = new Date(estimatedLandingTime);
-
-        // Zaman farkını milisaniye cinsinden hesapla
         const durationInMilliseconds = landingTime - departureTime;
-
-        // Milisaniyeleri saat ve dakikaya çevir
         const hours = Math.floor(durationInMilliseconds / (1000 * 60 * 60));
-        const minutes = Math.floor((durationInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+        const minutes = Math.floor(
+          (durationInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+        );
 
-        // Saat kısmı sıfır ise yalnızca dakika yaz
         if (hours === 0) {
           return `${minutes} dakika`;
         }
-
         return `${hours} saat ${minutes} dakika`;
       };
 
-      const duration = calculateFlightDuration(scheduleDateTime, estimatedLandingTime);
+      const duration = calculateFlightDuration(
+        scheduleDateTime,
+        estimatedLandingTime
+      );
       setFlightDuration(duration);
     }
   }, [scheduleDateTime, estimatedLandingTime]);
 
-  // Kalkış ve iniş saatlerini yerel saat formatına çevirme
   const departureTime = new Date(scheduleDateTime).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
@@ -47,33 +80,62 @@ console.log(estimatedLandingTime);
     minute: "2-digit",
   });
 
-  // Uçuş yönüne göre havaalanlarını belirleme
-  const departureAirport = flightDirection === "D" ? "AMS" : destination; // Kalkış havaalanı
-  const arrivalAirport = flightDirection === "D" ? destination : "AMS"; // Varış havaalanı
+  const departureAirport = flightDirection === "D" ? "AMS" : destination;
+  const arrivalAirport = flightDirection === "D" ? destination : "AMS";
 
+  const flightRouteText =
+    flightDirection === "D"
+      ? `Amsterdam - ${destinationData}`
+      : `${destinationData} - Amsterdam`;
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  const handleBookFlight = async () => {
+    try {
+      const reservationData = {
+        userId: id,  // Gerçek kullanıcı ID'sini burada kullanın
+        flightNumber: flightNumber,
+        departureTime: scheduleDateTime,
+        arrivalTime: estimatedLandingTime,
+        departureAirport,
+        arrivalAirport,
+        price: 200,  // Statik fiyat örneği
+        flightDuration: "2 saat",  // Bu örnek için statik, flightDuration değişkenine bağlayabilirsiniz
+      };
+
+      const response = await axios.post("http://localhost:3001/api/flight-reservations/reserve", reservationData);
+      console.log("Rezervasyon başarılı:", response.data);
+    } catch (error) {
+      console.error("Rezervasyon hatası:", error);
+    }
+  };
   return (
     <div className="card flight-card">
       <div className="card-body">
-        <h6 className="card-title">Flight: {flightName} ({prefixIATA})</h6>
+        <h6 className="card-title">{flightRouteText}</h6>
         <div className="d-flex align-items-center justify-content-between">
           <div>
             <div>
               <TbPlaneDeparture /> Departure
             </div>
-            <div>{departureTime}</div> {/* Kalkış saati */}
-            <div>Airport: {departureAirport}</div> {/* Kalkış havaalanı */}
+            <div>{departureTime}</div>
+            <div>Airport: {departureAirport}</div>
           </div>
 
           <hr />
 
           <div className="text-center">
-            <div>
-              <img src="/images/airline-logo.png" alt="airlineLogo" width={50} />
-            </div>
+            <div>{airlineData}</div>
             <div>
               <IoAirplane />
             </div>
-            <div>{flightDuration}</div> {/* Uçuş süresi */}
+            <div>{flightDuration}</div>
           </div>
 
           <hr />
@@ -82,8 +144,8 @@ console.log(estimatedLandingTime);
             <div>
               <TbPlaneArrival /> Arrival
             </div>
-            <div>{arrivalTime}</div> {/* İniş saati */}
-            <div>Airport: {arrivalAirport}</div> {/* Varış havaalanı */}
+            <div>{arrivalTime}</div>
+            <div>Airport: {arrivalAirport}</div>
           </div>
         </div>
       </div>
@@ -92,7 +154,7 @@ console.log(estimatedLandingTime);
           <p>Price: $200</p>
           <p>Round Trip</p>
         </div>
-        <button className="book-flight-btn">Book Flight</button>
+        <button className="book-flight-btn" onClick={handleBookFlight}>Book Flight</button>
         <div className="check-details">
           <a href="#">Check the details</a>
         </div>

@@ -1,0 +1,22 @@
+.top-header-container{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:30px;
+}
+.dropdown-toggle{
+    background:transparent;
+    border:none;
+    outline:none;
+    font-weight:600;
+}
+.avg-fare{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+.avg-fare span{
+    font-weight:600;
+    font-size:1rem;
+    
+}

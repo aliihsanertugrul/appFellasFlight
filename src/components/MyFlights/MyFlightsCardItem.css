@@ -1,0 +1,68 @@
+.my-flights-card-item {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.flight-info .flight-time {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.flight-details-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flight-details p {
+    margin: 0;
+}
+
+.flight-details p:nth-child(2) {
+    opacity: 0.8;
+}
+
+/* Large screens (desktop) */
+@media (min-width: 1201px) {
+    .my-flights-card-item .row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .my-flights-card-item .col-2, .my-flights-card-item .col-5 {
+       
+        padding: 10px;
+    }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 1200px) {
+    .my-flights-card-item .row {
+        display: flex;
+        flex-direction: column;
+        text-align:center;
+    }
+
+    .my-flights-card-item .col-2, .my-flights-card-item .col-5 {
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .flight-info .flight-time {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .flight-details-container {
+     
+        align-items: flex-start;
+    }
+
+    .flight-details {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

@@ -18,33 +18,7 @@ const BookYourFlightCard = () => {
   
   const schipholCode = "AMS";
   const route = departure == schipholCode ? arrival : departure;
-
-  // useEffect(() => {
-  //   if (departure) {
-  //     const flightDirection = departure === schipholCode ? "D" : "A";
-  //     fetchFlights({ flightDirection, scheduleDate: departureDate});
-  //   }
-  // }, [departure, departureDate]);
   
-
-  // Uçuşları filtreleme
-  const filterFlights = () => {
-     
-    // const filtered = flights.filter((flight) => {
-    //   const flightDeparture = flight.route.destinations[0];
-    //   const flightArrival = flight.route.destinations[flight.route.destinations.length - 1];
-    //   const flightDate = flight.scheduleDate;
-
-    //   const isDepartureMatch = !departure || flightDeparture === departure;
-    //   const isArrivalMatch = !arrival || flightArrival === arrival;
-    //   const isDateMatch = (!departureDate || flightDate >= departureDate) &&
-    //                       (!returnDate || flightDate <= returnDate);
-
-    //   return isDepartureMatch && isArrivalMatch && isDateMatch;
-    // });
-    // setFilteredFlights(filtered);
-  };
-  console.log(flightDirection,departureDate);
   useEffect(() => {
     if (flights.length > 0) {
       const uniqueAirports = [...new Set(flights.map(flight => flight.route.destinations[flight.route.destinations.length - 1]))];
@@ -67,7 +41,13 @@ const BookYourFlightCard = () => {
     
   };
 
-  if (loading) return <p>Loading flights...</p>;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
   if (error) return <p>Error loading flights: {error.message}</p>;
 
   const handleDepartureChange = (e) => {
