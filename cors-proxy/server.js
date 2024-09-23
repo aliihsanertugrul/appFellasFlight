@@ -13,17 +13,19 @@ mongoose.connect("mongodb://localhost:27017/flightDB")
   .catch((error) => console.error("MongoDB bağlantı hatası:", error));
 
 // Enable CORS for your front-end app at localhost:3000
-app.use(cors({
-  origin: 'http://localhost:3000' // Only allow requests from this origin
-}));
+app.use(cors());
 
 // Middleware
 app.use(express.json()); // To parse JSON bodies
 
-// Proxy API
-app.use('/proxy', (req, res) => {
-  const url = `https://api.schiphol.nl${req.url.replace('/proxy', '')}`;
+// Flight reservations route
+app.use("/api/flight-reservations", flightReservations);
 
+// Proxy API
+app.use('/api', (req, res) => {
+  const url = `https://api.schiphol.nl${req.url}`;
+  console.log("url", url);
+console.log("reqqq", req.url);
   // Proxy request headers
   const headers = {
     'ResourceVersion': 'v4',
@@ -40,8 +42,7 @@ app.use('/proxy', (req, res) => {
   });
 });
 
-// Flight reservations route
-app.use("/api/flight-reservations", flightReservations);
+
 
 // Start the server
 app.listen(port, () => {
