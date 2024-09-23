@@ -24,7 +24,7 @@ const BookYourFlightCard = () => {
       const uniqueAirports = [...new Set(flights.map(flight => flight.route.destinations[flight.route.destinations.length - 1]))];
       setDepartureOptions([schipholCode, ...uniqueAirports]);
       
-      // Kalkış noktasına göre varış seçeneklerini güncelleme
+      //Update the options based on the departure point
       setArrivalOptions(departure === schipholCode ? uniqueAirports : [schipholCode]);
     }
   }, [flights, departure]);
@@ -33,7 +33,7 @@ const BookYourFlightCard = () => {
     e.preventDefault();
     try {
       
-      await fetchFlights({ flightDirection, scheduleDate: departureDate,route});
+      await fetchFlights({ flightDirection:flightDirection, scheduleDate: departureDate,route:route});
       
     } catch (error) {
       console.log(error);
@@ -59,13 +59,19 @@ const BookYourFlightCard = () => {
       setFlightDirection("A");
     }
   }
-  console.log("flights", flights);
+ 
   return (
     <div className="card">
       <div className="card-body">
+        <div className="d-flex align-items-center justify-content-between mb-4">
         <h5 className="card-title">
           <FaPlane /> BOOK YOUR FLIGHT
         </h5>
+        <div className="book-your-flight-buttons">
+          <button className="btn round-trip">Round Trip</button>
+          <button className="btn one-way">One Way</button>
+        </div>
+        </div>
         <form onSubmit={handleSearch}>
           <div className="input-group-container">
             <div className="input-group mb-3 departure">
@@ -112,8 +118,20 @@ const BookYourFlightCard = () => {
                 onChange={(e) => setDepartureDate(e.target.value)}
               />
             </div>
+
+            {/* <div className="input-group mb-3 calendar-right">
+              <span className="input-group-text">
+                <BiSolidCalendarEvent />
+              </span>
+              <input
+                type="date"
+                className="form-control"
+                value={returnDate}
+                onChange={(e) => setReturnDate(e.target.value)}
+              />
+            </div> */}
           </div>
-          <button type="submit" className="btn btn-primary" >Show flights</button>
+          <button type="submit" className="custom-btn-primary" >Show flights</button>
         </form>
                 
         

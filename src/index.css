@@ -23,3 +23,11 @@ ul{
   
 }
 
+.custom-btn-primary{
+  background:purple;
+  color:white;
+  outline:none;
+  border:1px solid purple;
+  padding:5px 10px;
+  border-radius:6px;
+}

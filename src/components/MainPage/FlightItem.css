@@ -7,11 +7,19 @@ hr {
     border: 1px solid black !important; /* Çizginin kalınlığı ve rengini ayarlar */
     margin: 0 1rem !important;
   }
-.price-container{
+.flight-price-container{
     padding:20px;
 }
-.price-container p{
+.flight-price-container p{
     margin-bottom:0;
+}
+.flight-price-container p:nth-child(1){
+  color:purple;
+  font-weight:600;
+}
+.flight-price-container p:nth-child(2){
+  font-size:12px;
+  opacity:0.8;
 }
 .footer{
     position:relative;
@@ -67,4 +75,8 @@ hr {
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  .time{
+    font-weight:600;
   }

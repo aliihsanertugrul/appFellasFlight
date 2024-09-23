@@ -1,7 +1,7 @@
 const express = require('express');
 const request = require('request');
 const mongoose = require('mongoose');
-const cors = require('cors'); // Add the cors middleware
+const cors = require('cors'); // CORS middleware
 const flightReservations = require('./routes/flightReservations');
 
 const app = express();
@@ -14,19 +14,15 @@ mongoose.connect("mongodb://localhost:27017/flightDB")
 
 // Enable CORS for your front-end app at localhost:3000
 app.use(cors({
-  origin: 'http://localhost:3000' // Allow only requests from localhost:3000
+  origin: 'http://localhost:3000' // Only allow requests from this origin
 }));
 
 // Middleware
 app.use(express.json()); // To parse JSON bodies
 
 // Proxy API
-app.use('/api', (req, res) => {
-  console.log(req.url);
-  const url = `https://api.schiphol.nl${req.url}`;
-
-  // Extract query parameters
-  const { flightDirection, scheduleDate, page, iata, airline } = req.query;
+app.use('/proxy', (req, res) => {
+  const url = `https://api.schiphol.nl${req.url.replace('/proxy', '')}`;
 
   // Proxy request headers
   const headers = {
@@ -35,13 +31,13 @@ app.use('/api', (req, res) => {
     'app_key': '24947149ec3b2cc1fbe13a4efeab9ebc', // Replace with your actual app_key
   };
 
-  if (flightDirection) headers.flightDirection = flightDirection;
-  if (scheduleDate) headers.scheduleDate = scheduleDate;
-  if (page) headers.page = page;
-  if (iata) headers.iata = iata;
-  if (airline) headers.airline = airline;
-
-  req.pipe(request({ url, headers })).pipe(res);
+  request({ url, headers }, (error, response, body) => {
+    if (error) {
+      console.error('Proxy error:', error);
+      return res.status(500).json({ message: 'Internal Server Error', error });
+    }
+    res.status(response.statusCode).send(body);
+  });
 });
 
 // Flight reservations route

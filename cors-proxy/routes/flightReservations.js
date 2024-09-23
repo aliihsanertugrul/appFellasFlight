@@ -1,28 +1,44 @@
-// routes/flightReservations.js
 const express = require('express');
-const FlightReservation = require('../models/FlightReservation');
-
 const router = express.Router();
+const Reservation = require("../models/FlightReservation");
 
-// Tüm rezervasyonları getir
-router.get('/', async (req, res) => {
+// POST /api/flight-reservations/reserve
+router.post('/reserve', async (req, res) => {
   try {
-    const reservations = await FlightReservation.find();
-    res.json(reservations);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+    const { userId, flightNumber, departureTime, arrivalTime, departureAirport, arrivalAirport, price, flightDuration } = req.body;
 
-// Yeni rezervasyon ekle
-router.post('/', async (req, res) => {
-  const reservation = new FlightReservation(req.body);
-  try {
-    const savedReservation = await reservation.save();
+    // Yeni rezervasyonu oluştur
+    const newReservation = new Reservation({
+      userId,
+      flightNumber,
+      departureTime,
+      arrivalTime,
+      departureAirport,
+      arrivalAirport,
+      price, 
+      flightDuration
+    });
+
+    // Veritabanına kaydet
+    const savedReservation = await newReservation.save();
     res.status(201).json(savedReservation);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error("Rezervasyon hatası:", error);
+    res.status(500).json({ message: "İçsel Sunucu Hatası" });
   }
 });
+
+// GET /api/flight-reservations
+router.get('/', async (req, res) => {
+  try {
+    const reservations = await Reservation.find();
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error("Rezervasyonları alma hatası:", error);
+    res.status(500).json({ message: "İçsel Sunucu Hatası" });
+  }
+});
+
+
 
 module.exports = router;

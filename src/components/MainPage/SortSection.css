@@ -19,16 +19,16 @@
     font-weight:600
   }
   .form-check-input:checked {
-    background-color: purple;
-    border-color: purple;
+    background-color: purple !important;
+    border-color: purple !important;
+   
 }
 .form-check-input:focus {
-    border-color: purple; 
- outline: 0;
+    border-color: purple !important; 
+    outline: 0 !important;
     
 }
-.form-check-input {
-    
-    background-image: none;
-   
+.form-check-input {    
+    background-image: none !important;
+    border:1px solid purple !important;
 }

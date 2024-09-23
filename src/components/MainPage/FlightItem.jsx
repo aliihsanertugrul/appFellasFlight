@@ -3,6 +3,7 @@ import { TbPlaneDeparture, TbPlaneArrival } from "react-icons/tb";
 import { IoAirplane } from "react-icons/io5";
 import "./FlightItem.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FlightItem = ({ flight }) => {
   const {
@@ -17,11 +18,12 @@ const FlightItem = ({ flight }) => {
   const [flightDuration, setFlightDuration] = useState("");
   const [destinationData, setDestinationData] = useState("");
   const [airlineData, setAirlineData] = useState("");
-  const [loading, setLoading] = useState(true); // Yüklenme durumu için state
+  const [loading, setLoading] = useState(true); 
   const destination = route.destinations[route.destinations.length - 1];
+  const navigate=useNavigate();
 
   useEffect(() => {
-    // Uçuş bilgileriyle ilgili API'ye istek yap
+  
     const fetchDestinationData = async () => {
       try {
         const responseDestination = await axios.get(
@@ -32,15 +34,15 @@ const FlightItem = ({ flight }) => {
         );
         setDestinationData(responseDestination?.data?.publicName?.english);
         setAirlineData(responseAirline?.data?.publicName);
-        setLoading(false); // Veriler alındığında yüklenme durumu kapatılır
+        setLoading(false); 
       } catch (error) {
         console.error("Hata:", error);
-        setLoading(false); // Hata durumunda da yüklenme durumu kapatılır
+        setLoading(false); 
       }
     };
 
     fetchDestinationData();
-  }, [prefixICAO]); // `prefixICAO` değiştiğinde yeniden isteği yap
+  }, [prefixICAO]); 
 
   useEffect(() => {
     if (scheduleDateTime && estimatedLandingTime) {
@@ -105,12 +107,15 @@ const FlightItem = ({ flight }) => {
         arrivalTime: estimatedLandingTime,
         departureAirport,
         arrivalAirport,
-        price: 200,  // Statik fiyat örneği
-        flightDuration: "2 saat",  // Bu örnek için statik, flightDuration değişkenine bağlayabilirsiniz
+        price: 200,  
+        flightDuration: flightDuration, 
       };
 
-      const response = await axios.post("http://localhost:3001/api/flight-reservations/reserve", reservationData);
+      const response = await axios.post("http://localhost:3001/api/flight-reservations/reserve", reservationData,{headers: {
+        "Content-Type": "application/json",
+      }});
       console.log("Rezervasyon başarılı:", response.data);
+      navigate('/my-flights');
     } catch (error) {
       console.error("Rezervasyon hatası:", error);
     }
@@ -119,12 +124,12 @@ const FlightItem = ({ flight }) => {
     <div className="card flight-card">
       <div className="card-body">
         <h6 className="card-title">{flightRouteText}</h6>
-        <div className="d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center justify-content-between flex-md-row flex-column gap-3">
           <div>
             <div>
               <TbPlaneDeparture /> Departure
             </div>
-            <div>{departureTime}</div>
+            <div className="time">{departureTime}</div>
             <div>Airport: {departureAirport}</div>
           </div>
 
@@ -144,13 +149,13 @@ const FlightItem = ({ flight }) => {
             <div>
               <TbPlaneArrival /> Arrival
             </div>
-            <div>{arrivalTime}</div>
+            <div className="time">{arrivalTime}</div>
             <div>Airport: {arrivalAirport}</div>
           </div>
         </div>
       </div>
       <div className="footer d-flex align-items-center justify-content-between">
-        <div className="price-container">
+        <div className="flight-price-container">
           <p>Price: $200</p>
           <p>Round Trip</p>
         </div>

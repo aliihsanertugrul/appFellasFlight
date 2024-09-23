@@ -34,7 +34,7 @@
   margin-right:5px;
 }
 .departure span,
-.departure input,.calendar-left span,.calendar-left input {
+.departure select,.calendar-left span,.calendar-left input {
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -44,10 +44,10 @@
     border-radius: 0 20px 20px 0;
   }
   .arrival span,
-  .arrival input ,.calendar-right span,.calendar-right input{
+  .arrival select ,.calendar-right span,.calendar-right input{
     background: transparent;
     border: 0;
-    border-radius: 0;
+    border-radius: 0 20px 20px 0 ;
   }
 
 .input-group-text svg{
