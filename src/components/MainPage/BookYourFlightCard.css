@@ -36,10 +36,33 @@
   border-radius: 20px;
   box-shadow: none !important;
 }
+.input-container-wrapper{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+@media (max-width:1200px){
+  .input-container-wrapper{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-direction:column;
+  }
+  .input-group-container {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    margin: 10px;
+    flex:1;
+    width:100%;
+  }
+}
 .input-group-container {
   display: flex;
   align-items: center;
+  justify-content:center;
   margin: 10px;
+  flex:1
 }
 
 .departure,

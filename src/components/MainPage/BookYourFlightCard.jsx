@@ -17,7 +17,7 @@ const BookYourFlightCard = () => {
   const [tripType, setTripType] = useState("round-trip"); // Round trip is active initially
 
   const schipholCode = "AMS";
-  const route = departure == schipholCode ? arrival : departure;
+  const route = departure === schipholCode ? arrival : departure;
 
   useEffect(() => {
     if (flights.length > 0) {
@@ -86,7 +86,7 @@ const BookYourFlightCard = () => {
   return (
     <div className="card">
       <div className="card-body">
-        <div className="d-flex align-items-center justify-content-between mb-4">
+        <div className="d-flex flex-column flex-sm-row align-items-center justify-content-between mb-4">
           <h5 className="card-title">
             <FaPlane /> BOOK YOUR FLIGHT
           </h5>
@@ -108,6 +108,7 @@ const BookYourFlightCard = () => {
           </div>
         </div>
         <form onSubmit={handleSearch}>
+          <div className="input-container-wrapper">
           <div className="input-group-container">
             <div className="input-group mb-3 departure">
               <span className="input-group-text">
@@ -177,6 +178,7 @@ const BookYourFlightCard = () => {
                 />
               </div>
             )}
+          </div>
           </div>
           <button type="submit" className="custom-btn-primary">
             Show flights

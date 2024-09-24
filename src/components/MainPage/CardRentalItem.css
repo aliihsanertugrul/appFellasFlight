@@ -1,5 +1,5 @@
 .rental-container {
-    height: 33%; 
+    min-height:200px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
