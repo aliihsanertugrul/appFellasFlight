@@ -14,17 +14,18 @@ const BookYourFlightCard = () => {
   const [filteredFlights, setFilteredFlights] = useState([]);
   const [departureOptions, setDepartureOptions] = useState([]);
   const [arrivalOptions, setArrivalOptions] = useState([]);
-  const [flightDirection, setFlightDirection] = useState("")
-  
+  const [flightDirection, setFlightDirection] = useState("");
+  const [tripType, setTripType] = useState("round-trip"); // Başlangıçta round trip aktif olacak
+
   const schipholCode = "AMS";
   const route = departure == schipholCode ? arrival : departure;
-  
+
   useEffect(() => {
     if (flights.length > 0) {
       const uniqueAirports = [...new Set(flights.map(flight => flight.route.destinations[flight.route.destinations.length - 1]))];
       setDepartureOptions([schipholCode, ...uniqueAirports]);
       
-      //Update the options based on the departure point
+      // Update the options based on the departure point
       setArrivalOptions(departure === schipholCode ? uniqueAirports : [schipholCode]);
     }
   }, [flights, departure]);
@@ -32,13 +33,14 @@ const BookYourFlightCard = () => {
   const handleSearch = async(e) => {
     e.preventDefault();
     try {
-      
-      await fetchFlights({ flightDirection:flightDirection, scheduleDate: departureDate,route:route});
-      
+      if (tripType === "one-way") {
+        await fetchFlights({ flightDirection: flightDirection, scheduleDate: departureDate, route: route });
+      } else {
+        await fetchFlights({ flightDirection: flightDirection, fromScheduleDate: departureDate, toScheduleDate: returnDate, route: route });
+      }
     } catch (error) {
       console.log(error);
     }
-    
   };
 
   if (loading) {
@@ -51,26 +53,40 @@ const BookYourFlightCard = () => {
   if (error) return <p>Error loading flights: {error.message}</p>;
 
   const handleDepartureChange = (e) => {
-    const value=e.target.value
+    const value = e.target.value;
     setDeparture(value);
     if (value === schipholCode) {
       setFlightDirection("D");
     } else {
       setFlightDirection("A");
     }
-  }
- 
+  };
+
+  const handleTripTypeChange = (type) => {
+    setTripType(type);
+  };
+
   return (
     <div className="card">
       <div className="card-body">
         <div className="d-flex align-items-center justify-content-between mb-4">
-        <h5 className="card-title">
-          <FaPlane /> BOOK YOUR FLIGHT
-        </h5>
-        <div className="book-your-flight-buttons">
-          <button className="btn round-trip">Round Trip</button>
-          <button className="btn one-way">One Way</button>
-        </div>
+          <h5 className="card-title">
+            <FaPlane /> BOOK YOUR FLIGHT
+          </h5>
+          <div className="book-your-flight-buttons">
+            <button
+              className={`round-trip ${tripType === "round-trip" ? "active" : ""}`}
+              onClick={() => handleTripTypeChange("round-trip")}
+            >
+              Round Trip
+            </button>
+            <button
+              className={`one-way ${tripType === "one-way" ? "active" : ""}`}
+              onClick={() => handleTripTypeChange("one-way")}
+            >
+              One Way
+            </button>
+          </div>
         </div>
         <form onSubmit={handleSearch}>
           <div className="input-group-container">
@@ -107,7 +123,7 @@ const BookYourFlightCard = () => {
             </div>
           </div>
           <div className="input-group-container">
-            <div className="input-group mb-3 calendar-left">
+            <div className={`input-group mb-3 ${tripType === "one-way" ? "one-way-calendar-left" : "calendar-left"}`}>
               <span className="input-group-text">
                 <BiSolidCalendarEvent />
               </span>
@@ -119,22 +135,22 @@ const BookYourFlightCard = () => {
               />
             </div>
 
-            {/* <div className="input-group mb-3 calendar-right">
-              <span className="input-group-text">
-                <BiSolidCalendarEvent />
-              </span>
-              <input
-                type="date"
-                className="form-control"
-                value={returnDate}
-                onChange={(e) => setReturnDate(e.target.value)}
-              />
-            </div> */}
+            {tripType === "round-trip" && (
+              <div className="input-group mb-3 calendar-right">
+                <span className="input-group-text">
+                  <BiSolidCalendarEvent />
+                </span>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={returnDate}
+                  onChange={(e) => setReturnDate(e.target.value)}
+                />
+              </div>
+            )}
           </div>
-          <button type="submit" className="custom-btn-primary" >Show flights</button>
+          <button type="submit" className="custom-btn-primary">Show flights</button>
         </form>
-                
-        
       </div>
     </div>
   );

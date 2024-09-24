@@ -1,57 +1,89 @@
-.book-your-flight-buttons .btn.round-trip {
+.book-your-flight-buttons .round-trip {
   color: white;
-  background: purple;
+  background: gray;
   border-radius: 20px 0 0 20px;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
 }
 
-.book-your-flight-buttons .btn.one-way {
+.book-your-flight-buttons .one-way {
   color: white;
   background: gray;
   border-radius: 0 20px 20px 0;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
 }
-.card-text{
-    display:flex;
-    margin-top:20px;
-  
+.book-your-flight-buttons .round-trip.active {
+  color: white;
+  background: purple;
+}
+
+.book-your-flight-buttons .one-way.active {
+  color: white;
+  background: purple;
+}
+.card-text {
+  display: flex;
+  margin-top: 20px;
 }
 .form-control:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
   border-color: grey !important;
   outline: 0;
-  border-radius:20px;
+  border-radius: 20px;
   box-shadow: none !important;
 }
 .input-group-container {
   display: flex;
   align-items: center;
-  margin:10px;
+  margin: 10px;
 }
 
-.departure,.calendar-left {
+.departure,
+.calendar-left {
   border: 1px solid gray;
   border-radius: 20px 0 0 20px;
-  margin-right:5px;
+  margin-right: 5px;
 }
-.departure span,
-.departure select,.calendar-left span,.calendar-left input {
+.one-way-calendar-left {
+  border: 1px solid gray;
+  border-radius: 20px;
+  margin-right: 5px;
+}
+.one-way-calendar-left input,
+.one-way-calendar-left span {
   background: transparent;
   border: 0;
   border-radius: 0;
 }
-.arrival,.calendar-right {
-    border: 1px solid gray;
-    border-radius: 0 20px 20px 0;
-  }
-  .arrival span,
-  .arrival select ,.calendar-right span,.calendar-right input{
-    background: transparent;
-    border: 0;
-    border-radius: 0 20px 20px 0 ;
-  }
+.departure span,
+.departure select,
+.calendar-left span,
+.calendar-left input {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
 
-.input-group-text svg{
-    color:purple;
+.arrival,
+.calendar-right {
+  border: 1px solid gray;
+  border-radius: 0 20px 20px 0;
+}
+.arrival span,
+.arrival select,
+.calendar-right span,
+.calendar-right input {
+  background: transparent;
+  border: 0;
+  border-radius: 0 20px 20px 0;
+}
+
+.input-group-text svg {
+  color: purple;
 }
 
 .loading-container {

@@ -9,6 +9,7 @@ const flightReservationSchema = new mongoose.Schema({
     arrivalAirport: String,
     price: Number,
     flightDuration: String,
+    airline:String,
 });
 
 const FlightReservation = mongoose.model('FlightReservation', flightReservationSchema);

@@ -6,7 +6,7 @@ const Reservation = require("../models/FlightReservation");
 router.post('/reserve', async (req, res) => {
  
   try {
-    const { userId, flightNumber, departureTime, arrivalTime, departureAirport, arrivalAirport, price, flightDuration } = req.body;
+    const { userId, flightNumber, departureTime, arrivalTime, departureAirport, arrivalAirport, price, flightDuration,airline } = req.body;
 
     // Yeni rezervasyonu oluştur
     const newReservation = new Reservation({
@@ -17,7 +17,8 @@ router.post('/reserve', async (req, res) => {
       departureAirport,
       arrivalAirport,
       price, 
-      flightDuration
+      flightDuration,
+      airline
     });
 
     // Veritabanına kaydet

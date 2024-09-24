@@ -3,11 +3,11 @@ import FlightItem from './FlightItem'
 import { FlightContext } from '../../context/flightsContext'
 
 const Flights = () => {
-  const {flights} = useContext(FlightContext)
+  const {filteredFlights} = useContext(FlightContext)
   return (
     <div>
-      {flights.map((flight) => (
-        <FlightItem key={flight.id} flight={flight}/>
+      {filteredFlights.map((flight) => (
+        <FlightItem key={flight.id} flight={flight} />
       ))}
       
     </div>

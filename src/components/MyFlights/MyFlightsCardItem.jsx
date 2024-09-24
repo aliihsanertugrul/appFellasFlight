@@ -3,7 +3,11 @@ import React from "react";
 import "./MyFlightsCardItem.css";
 import PriceCards from "./PriceCards";
 
-const MyFlightsCardItem = () => {
+const MyFlightsCardItem = ({ reservation }) => {
+  console.log(reservation);
+  const {arrivalAirport,arrivalTime,departureAirport,departureTime,flightNumber,price,flightDuration,airline} = reservation
+  const formattedDepartureTime = new Date(departureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const formattedArrivalTime = new Date(arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   return (
     <div className="my-flights-card-item">
       <div className="row">
@@ -11,10 +15,10 @@ const MyFlightsCardItem = () => {
           <img src="/images/alitalia.png" width={50} alt="" />
         </div>
         <div className="col-5 flight-info">
-          <div className="flight-time">7:40 AM - 9:30 AM</div>
+          <div className="flight-time">{formattedDepartureTime} - {formattedArrivalTime}</div>
           <div className="flight-details-container">
             <div className="flight-details">
-              <p>Delta Airlines</p>
+              <p>{airline}</p>
               <div class="dropdown">
                 <button
                   class="dropdown-toggle"
@@ -46,11 +50,11 @@ const MyFlightsCardItem = () => {
             </div>
             <div className="flight-details">
               <p>Nonstop</p>
-              <p>1h 32m</p>
+              <p>{flightDuration}</p>
             </div>
             <div className="flight-details">
-              <p>SFO to LAX</p>
-              <p>DL 1443</p>
+              <p>{departureAirport} to {arrivalAirport}</p>
+              <p>{flightNumber}</p>
             </div>
           </div>
         </div>

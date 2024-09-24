@@ -4,6 +4,7 @@ import { IoAirplane } from "react-icons/io5";
 import "./FlightItem.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { swalAlert, swalToast } from "../../helpers/swal";
 
 const FlightItem = ({ flight }) => {
   const {
@@ -18,12 +19,11 @@ const FlightItem = ({ flight }) => {
   const [flightDuration, setFlightDuration] = useState("");
   const [destinationData, setDestinationData] = useState("");
   const [airlineData, setAirlineData] = useState("");
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const destination = route.destinations[route.destinations.length - 1];
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-  
     const fetchDestinationData = async () => {
       try {
         const responseDestination = await axios.get(
@@ -34,15 +34,15 @@ const FlightItem = ({ flight }) => {
         );
         setDestinationData(responseDestination?.data?.publicName?.english);
         setAirlineData(responseAirline?.data?.publicName);
-        setLoading(false); 
+        setLoading(false);
       } catch (error) {
         console.error("Hata:", error);
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchDestinationData();
-  }, [prefixICAO]); 
+  }, [prefixICAO]);
 
   useEffect(() => {
     if (scheduleDateTime && estimatedLandingTime) {
@@ -99,23 +99,37 @@ const FlightItem = ({ flight }) => {
   }
 
   const handleBookFlight = async () => {
+    //check if reservation date is in the past
+    const scheduledDate = new Date(scheduleDateTime);
+    const currentDate = new Date();
+    if (scheduledDate < currentDate) {
+      swalToast("Reservation date cannot be in the past!", "error");
+      return;
+    }
     try {
       const reservationData = {
-        userId: id,  // Gerçek kullanıcı ID'sini burada kullanın
+        userId: id, // Gerçek kullanıcı ID'sini burada kullanın
         flightNumber: flightNumber,
         departureTime: scheduleDateTime,
         arrivalTime: estimatedLandingTime,
         departureAirport,
         arrivalAirport,
-        price: 200,  
-        flightDuration: flightDuration, 
+        price: 200,
+        flightDuration: flightDuration,
+        airline:airlineData,
       };
 
-      const response = await axios.post("http://localhost:3001/api/flight-reservations/reserve", reservationData,{headers: {
-        "Content-Type": "application/json",
-      }});
-      console.log("Rezervasyon başarılı:", response.data);
-      navigate('/my-flights');
+      const response = await axios.post(
+        "http://localhost:3001/api/flight-reservations/reserve",
+        reservationData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      swalToast("Reservation successful", "success");
+      navigate("/my-flights");
     } catch (error) {
       console.error("Rezervasyon hatası:", error);
     }
@@ -159,7 +173,9 @@ const FlightItem = ({ flight }) => {
           <p>Price: $200</p>
           <p>Round Trip</p>
         </div>
-        <button className="book-flight-btn" onClick={handleBookFlight}>Book Flight</button>
+        <button className="book-flight-btn" onClick={handleBookFlight}>
+          Book Flight
+        </button>
         <div className="check-details">
           <a href="#">Check the details</a>
         </div>

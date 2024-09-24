@@ -7,7 +7,7 @@ const TopHeader = () => {
     <div className="top-header-container">
       <div className="d-flex align-items-center">
         Sort by:{" "}
-        <div class="dropdown">
+        <div className="dropdown">
           <button
             className="dropdown-toggle"
             type="button"
