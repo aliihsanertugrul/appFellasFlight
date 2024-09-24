@@ -3,7 +3,7 @@ import { FaUmbrellaBeach, FaCar, FaHotel } from "react-icons/fa"; // Iconları i
 
 import "./CardRentalItem.css";
 const CardRentalItem = ({ rentalData }) => {
-  const { name, icon, backgroundImage } = rentalData;
+  const { name, icon, backgroundImage,filter } = rentalData;
 
   const renderIcon = () => {
     switch (icon) {
@@ -21,7 +21,7 @@ const CardRentalItem = ({ rentalData }) => {
   return (
     <li
       className="rental-container"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{ backgroundImage: `url(${backgroundImage})` , filter:filter}}
     >
       <div className="rental-info">
         <div className="icon">{renderIcon()}</div>

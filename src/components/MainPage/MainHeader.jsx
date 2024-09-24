@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaPlane } from "react-icons/fa";
+import { IoIosAirplane } from "react-icons/io";
 import { FaTag } from "react-icons/fa6";
 import { GiWorld } from "react-icons/gi";
 import { MdAirplaneTicket } from "react-icons/md";
@@ -13,7 +13,7 @@ const MainHeader = () => {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/"><FaPlane  color="purple"/> PLANE SCAPE</Link>
+        <Link to="/"><IoIosAirplane size={30}/> PLANE SCAPE</Link>
       </div>
       <nav className="nav">
         <ul>
@@ -32,7 +32,7 @@ const MainHeader = () => {
             <Link to="#"><GiWorld color="purple"/> Discover</Link>
           </li>
           <li>
-            <Link to="#">Joane Smith</Link>
+            <Link to="#"> <img src="/images/profile.jpg" alt="profile" width={30} height={30} style={{borderRadius:"50%"}}/> Joane Smith</Link>
           </li>
         </ul>
       </nav>
