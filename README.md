@@ -11,6 +11,8 @@ Veriler arasında uçuş süresi bilgisi bulunmadığı halde, kullanıcıya uç
 
 Kullanıcı "Book Flight" butonuna bastığında, uçuş geçmiş bir tarihteyse sistem "uçuş geçmiş tarihlidir" mesajı veriyor. Eğer uçuş geçmişte değilse, kullanıcıya bir Toast mesajı göstererek, onu "uçuşlarım" sayfasına yönlendiriyorum.
 
+---
+
 In this project, I used Express.js, a Node.js-based backend framework, to store flight data in a MongoDB database. The system displays flights arriving at and departing from Amsterdam Schiphol Airport. The logic is that if the departure location is from a different airport, the destination will be AMS (Amsterdam Schiphol Airport).
 
 Using the provided endpoints, I successfully fetched the flight lists as required. Additionally, I used the destination/{iata} and airlines/{airline} endpoints to display the airport names and the city names for the destination on the flight cards.
