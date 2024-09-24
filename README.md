@@ -2,6 +2,23 @@
 ![My Flights MainPage Screenshot](./public/images/main-page.png)
 ![My Flights Screenshot](./public/images/my-flights.png)
 
+# What I did in the Project
+Projede Node.js tabanlı bir backend framework'ü olan Express.js kullanarak, uçuş verilerini MongoDB veritabanına kaydettim. Bu sistem, Amsterdam Schiphol Havalimanı'na gelen ve oradan kalkan uçuşları kullanıcıya göstermektedir. Uçuşların mantığı şu şekildedir: Kalkış noktası farklı bir havalimanı ise varış noktası AMS (Amsterdam Schiphol Havalimanı) olacaktır.
+
+Verilen endpoint'ler aracılığıyla uçuş listelerini istenilen şekilde getirdim. Ayrıca, havalimanı isimlerini ve varış yerindeki şehrin ismini de göstermek için destination/{iata} ve airlines/{airline} endpoint'lerini kullandım.
+
+Veriler arasında uçuş süresi bilgisi bulunmadığı halde, kullanıcıya uçuş süresinin hesaplanmış halini göstermek için bir kod bloğu yazdım. Bu hesaplamanın doğruluğuna dair garanti verilmemekle birlikte, uçuş süresi sonuçlarını gösteriyorum.
+
+Kullanıcı "Book Flight" butonuna bastığında, uçuş geçmiş bir tarihteyse sistem "uçuş geçmiş tarihlidir" mesajı veriyor. Eğer uçuş geçmişte değilse, kullanıcıya bir Toast mesajı göstererek, onu "uçuşlarım" sayfasına yönlendiriyorum.
+
+In this project, I used Express.js, a Node.js-based backend framework, to store flight data in a MongoDB database. The system displays flights arriving at and departing from Amsterdam Schiphol Airport. The logic is that if the departure location is from a different airport, the destination will be AMS (Amsterdam Schiphol Airport).
+
+Using the provided endpoints, I successfully fetched the flight lists as required. Additionally, I used the destination/{iata} and airlines/{airline} endpoints to display the airport names and the city names for the destination on the flight cards.
+
+Although the data did not include flight duration, I implemented a code block to calculate and display the estimated flight duration, even if the result might not be accurate.
+
+When the user presses the "Book Flight" button, if the flight date is in the past, the system notifies the user that the flight is dated in the past. If the flight is not in the past, a Toast message is displayed, and the user is redirected to the "My Flights" page.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -9,6 +26,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+### `node server.js`
+
+Open a terminal and navigate to the backend directory of your project.
+If you haven't installed the necessary dependencies yet, make sure to run npm install to install all the required packages for the backend.
+Once inside the backend directory, you can start the server by running the following command 
+node server.js
 
 ### `npm start`
 
