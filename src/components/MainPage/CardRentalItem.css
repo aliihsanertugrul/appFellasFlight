@@ -1,5 +1,5 @@
 .rental-container {
-    height: 33vh; /* Yüksekliği viewport yüksekliğinin %33'ü olarak ayarladık */
+    height: 33vh; 
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;

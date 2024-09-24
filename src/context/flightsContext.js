@@ -3,8 +3,6 @@ import axios from "axios";
 
 export const FlightContext = createContext(null);
 
-
-
 const FlightProvider = ({ children }) => {
   const [flights, setFlights] = useState([]);
   const [filteredFlights, setFilteredFlights] = useState([]);
@@ -13,9 +11,8 @@ const FlightProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const fetchFlights = (queryParams) => {
-    console.log("queryParams", queryParams);
-    const flightDirection = queryParams?.flightDirection || '';
-    const scheduleDate = queryParams?.scheduleDate || '';
+    const flightDirection = queryParams?.flightDirection || "";
+    const scheduleDate = queryParams?.scheduleDate || "";
     const page = queryParams?.page;
     const route = queryParams?.route;
 
@@ -24,7 +21,9 @@ const FlightProvider = ({ children }) => {
       scheduleDate && `scheduleDate=${scheduleDate}`,
       page && `page=${page}`,
       route && `route=${route}`,
-    ].filter(Boolean).join('&');
+    ]
+      .filter(Boolean)
+      .join("&");
 
     axios
       .get(`http://localhost:3001/api/public-flights/flights?${queryString}`)
@@ -49,7 +48,17 @@ const FlightProvider = ({ children }) => {
   }, []);
 
   return (
-    <FlightContext.Provider value={{ flights, loading, error, fetchFlights,reservations,setReservations,filteredFlights }}>
+    <FlightContext.Provider
+      value={{
+        flights,
+        loading,
+        error,
+        fetchFlights,
+        reservations,
+        setReservations,
+        filteredFlights,
+      }}
+    >
       {children}
     </FlightContext.Provider>
   );

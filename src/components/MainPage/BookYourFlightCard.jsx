@@ -11,32 +11,49 @@ const BookYourFlightCard = () => {
   const [arrival, setArrival] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
-  const [filteredFlights, setFilteredFlights] = useState([]);
   const [departureOptions, setDepartureOptions] = useState([]);
   const [arrivalOptions, setArrivalOptions] = useState([]);
   const [flightDirection, setFlightDirection] = useState("");
-  const [tripType, setTripType] = useState("round-trip"); // Başlangıçta round trip aktif olacak
+  const [tripType, setTripType] = useState("round-trip"); // Round trip is active initially
 
   const schipholCode = "AMS";
   const route = departure == schipholCode ? arrival : departure;
 
   useEffect(() => {
     if (flights.length > 0) {
-      const uniqueAirports = [...new Set(flights.map(flight => flight.route.destinations[flight.route.destinations.length - 1]))];
+      const uniqueAirports = [
+        ...new Set(
+          flights.map(
+            (flight) =>
+              flight.route.destinations[flight.route.destinations.length - 1]
+          )
+        ),
+      ];
       setDepartureOptions([schipholCode, ...uniqueAirports]);
-      
+
       // Update the options based on the departure point
-      setArrivalOptions(departure === schipholCode ? uniqueAirports : [schipholCode]);
+      setArrivalOptions(
+        departure === schipholCode ? uniqueAirports : [schipholCode]
+      );
     }
   }, [flights, departure]);
 
-  const handleSearch = async(e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     try {
       if (tripType === "one-way") {
-        await fetchFlights({ flightDirection: flightDirection, scheduleDate: departureDate, route: route });
+        await fetchFlights({
+          flightDirection: flightDirection,
+          scheduleDate: departureDate,
+          route: route,
+        });
       } else {
-        await fetchFlights({ flightDirection: flightDirection, fromScheduleDate: departureDate, toScheduleDate: returnDate, route: route });
+        await fetchFlights({
+          flightDirection: flightDirection,
+          fromScheduleDate: departureDate,
+          toScheduleDate: returnDate,
+          route: route,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -75,7 +92,9 @@ const BookYourFlightCard = () => {
           </h5>
           <div className="book-your-flight-buttons">
             <button
-              className={`round-trip ${tripType === "round-trip" ? "active" : ""}`}
+              className={`round-trip ${
+                tripType === "round-trip" ? "active" : ""
+              }`}
               onClick={() => handleTripTypeChange("round-trip")}
             >
               Round Trip
@@ -101,7 +120,9 @@ const BookYourFlightCard = () => {
               >
                 <option value="">Select Departure</option>
                 {departureOptions.map((dep, index) => (
-                  <option key={index} value={dep}>{dep}</option>
+                  <option key={index} value={dep}>
+                    {dep}
+                  </option>
                 ))}
               </select>
             </div>
@@ -117,13 +138,21 @@ const BookYourFlightCard = () => {
               >
                 <option value="">Select Arrival</option>
                 {arrivalOptions.map((arr, index) => (
-                  <option key={index} value={arr}>{arr}</option>
+                  <option key={index} value={arr}>
+                    {arr}
+                  </option>
                 ))}
               </select>
             </div>
           </div>
           <div className="input-group-container">
-            <div className={`input-group mb-3 ${tripType === "one-way" ? "one-way-calendar-left" : "calendar-left"}`}>
+            <div
+              className={`input-group mb-3 ${
+                tripType === "one-way"
+                  ? "one-way-calendar-left"
+                  : "calendar-left"
+              }`}
+            >
               <span className="input-group-text">
                 <BiSolidCalendarEvent />
               </span>
@@ -149,7 +178,9 @@ const BookYourFlightCard = () => {
               </div>
             )}
           </div>
-          <button type="submit" className="custom-btn-primary">Show flights</button>
+          <button type="submit" className="custom-btn-primary">
+            Show flights
+          </button>
         </form>
       </div>
     </div>

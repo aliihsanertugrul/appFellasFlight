@@ -4,7 +4,7 @@ import { IoAirplane } from "react-icons/io5";
 import "./FlightItem.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { swalAlert, swalToast } from "../../helpers/swal";
+import {  swalToast } from "../../helpers/swal";
 
 const FlightItem = ({ flight }) => {
   const {
@@ -108,7 +108,7 @@ const FlightItem = ({ flight }) => {
     }
     try {
       const reservationData = {
-        userId: id, // Gerçek kullanıcı ID'sini burada kullanın
+        userId: id, 
         flightNumber: flightNumber,
         departureTime: scheduleDateTime,
         arrivalTime: estimatedLandingTime,

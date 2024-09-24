@@ -5,9 +5,23 @@ import PriceCards from "./PriceCards";
 
 const MyFlightsCardItem = ({ reservation }) => {
   console.log(reservation);
-  const {arrivalAirport,arrivalTime,departureAirport,departureTime,flightNumber,price,flightDuration,airline} = reservation
-  const formattedDepartureTime = new Date(departureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const formattedArrivalTime = new Date(arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const {
+    arrivalAirport,
+    arrivalTime,
+    departureAirport,
+    departureTime,
+    flightNumber,
+    flightDuration,
+    airline,
+  } = reservation;
+  const formattedDepartureTime = new Date(departureTime).toLocaleTimeString(
+    [],
+    { hour: "2-digit", minute: "2-digit" }
+  );
+  const formattedArrivalTime = new Date(arrivalTime).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   return (
     <div className="my-flights-card-item">
       <div className="row">
@@ -15,7 +29,9 @@ const MyFlightsCardItem = ({ reservation }) => {
           <img src="/images/alitalia.png" width={50} alt="" />
         </div>
         <div className="col-5 flight-info">
-          <div className="flight-time">{formattedDepartureTime} - {formattedArrivalTime}</div>
+          <div className="flight-time">
+            {formattedDepartureTime} - {formattedArrivalTime}
+          </div>
           <div className="flight-details-container">
             <div className="flight-details">
               <p>{airline}</p>
@@ -25,7 +41,7 @@ const MyFlightsCardItem = ({ reservation }) => {
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
-                  style={{color:"#47a4cc",padding:"0"}}
+                  style={{ color: "#47a4cc", padding: "0" }}
                 >
                   Flight Details
                 </button>
@@ -53,7 +69,9 @@ const MyFlightsCardItem = ({ reservation }) => {
               <p>{flightDuration}</p>
             </div>
             <div className="flight-details">
-              <p>{departureAirport} to {arrivalAirport}</p>
+              <p>
+                {departureAirport} to {arrivalAirport}
+              </p>
               <p>{flightNumber}</p>
             </div>
           </div>

@@ -12,13 +12,12 @@ const MainPage = () => {
         <div className="col-md-8">
           <div className="row">
             <div className="col-12">
-              <BookYourFlightCard  />
+              <BookYourFlightCard />
             </div>
           </div>
           <div className="row">
             <div className="col-8">
-              <Flights/>
-              
+              <Flights />
             </div>
             <div className="col-4">
               <SortSection />
