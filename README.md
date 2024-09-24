@@ -32,8 +32,7 @@ In the project directory, you can run:
 
 Open a terminal and navigate to the backend directory of your project.
 If you haven't installed the necessary dependencies yet, make sure to run npm install to install all the required packages for the backend.
-Once inside the backend directory, you can start the server by running the following command 
-node server.js
+Once inside the backend directory, you can start the server by running the following command => node server.js
 
 ### `npm start`
 
