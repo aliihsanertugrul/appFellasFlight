@@ -6,7 +6,7 @@ const Flights = () => {
   const {filteredFlights} = useContext(FlightContext)
   return (
     <div>
-      {filteredFlights.map((flight) => (
+      {filteredFlights?.map((flight) => (
         <FlightItem key={flight.id} flight={flight} />
       ))}
       
