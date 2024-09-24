@@ -1,4 +1,5 @@
 
+![My Flights MainPage Screenshot](./public/images/main-page.png)
 ![My Flights Screenshot](./public/images/my-flights.png)
 
 # Getting Started with Create React App
